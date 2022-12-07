@@ -11,10 +11,10 @@ export class Phone {
   @Column({ length: 14 })
   number: string;
 
-  @ManyToOne(() => Client, { nullable: true })
+  @ManyToOne(() => Client, (client) => client.emails, { nullable: true, onDelete: "CASCADE" })
   client: Client;
 
-  @ManyToOne(() => Contact, { nullable: true })
+  @ManyToOne(() => Contact, (contact) => contact.emails, { nullable: true, onDelete: "CASCADE" })
   contact: Contact;
 
   constructor() {
