@@ -24,7 +24,9 @@ export class Contact {
   })
   phones: Phone[];
 
-  @ManyToOne(() => Client)
+  @ManyToOne(() => Client, {
+    onDelete: "CASCADE",
+  })
   client: Client;
 
   constructor() {

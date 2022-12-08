@@ -3,11 +3,14 @@ import { Email } from "../../entities/emails.entity";
 import { Client } from "../../entities/clients.entity";
 import { Contact } from "../../entities/contacts.entity";
 import { AppError } from "../../errors/AppError";
+import { IEmailRequest } from "../../interfaces/emails";
 
-export const emailCreateService = async ({ email, clientId, contactId }: any) => {
-  // Conectar com contatos depois
-  // Lembrar que tem que estar logado
+export const emailCreateService = async ({ email, clientId, contactId }: IEmailRequest) => {
   const emailRepository = AppDataSource.getRepository(Email);
+
+  if (!email) {
+    throw new AppError(400, "email is required a field");
+  }
 
   if (!clientId && !contactId) {
     throw new AppError(404, "Client or contact not found");
@@ -27,7 +30,7 @@ export const emailCreateService = async ({ email, clientId, contactId }: any) =>
 
     const newEmail = await emailRepository.save({
       email,
-      client: clientId,
+      client,
     });
 
     const returnedEmail = await emailRepository.findOneBy({ id: newEmail.id });
@@ -43,7 +46,7 @@ export const emailCreateService = async ({ email, clientId, contactId }: any) =>
 
     const newEmail = await emailRepository.save({
       email,
-      contact: contactId,
+      contact,
     });
 
     const returnedEmail = await emailRepository.findOneBy({ id: newEmail.id });
