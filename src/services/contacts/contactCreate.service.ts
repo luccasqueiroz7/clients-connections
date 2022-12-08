@@ -4,12 +4,20 @@ import { Phone } from "../../entities/phones.entity";
 import { AppError } from "../../errors/AppError";
 import { Contact } from "../../entities/contacts.entity";
 import { Client } from "../../entities/clients.entity";
+import { IContactRequest } from "../../interfaces/contacts";
 
-export const contactCreateService = async ({ name, emails, phones }: any, userId: string) => {
+export const contactCreateService = async (
+  { name, emails, phones }: IContactRequest,
+  userId: string
+) => {
   const contactRepository = AppDataSource.getRepository(Contact);
   const clientRepository = AppDataSource.getRepository(Client);
   const emailRepository = AppDataSource.getRepository(Email);
   const phoneRepository = AppDataSource.getRepository(Phone);
+
+  if (!name) {
+    throw new AppError(400, "name is required a field");
+  }
 
   const client = await clientRepository.findOneBy({ id: userId });
 

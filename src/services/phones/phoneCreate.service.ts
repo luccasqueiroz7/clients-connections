@@ -3,11 +3,14 @@ import { Client } from "../../entities/clients.entity";
 import { Contact } from "../../entities/contacts.entity";
 import { AppError } from "../../errors/AppError";
 import { Phone } from "../../entities/phones.entity";
+import { IPhoneRequest } from "../../interfaces/phones";
 
-export const phoneCreateService = async ({ number, clientId, contactId }: any) => {
-  // Conectar com contatos depois
-  // Lembrar que tem que estar logado
+export const phoneCreateService = async ({ number, clientId, contactId }: IPhoneRequest) => {
   const phoneRepository = AppDataSource.getRepository(Phone);
+
+  if (!number) {
+    throw new AppError(400, "number is required a field");
+  }
 
   if (number.length < 8 || number.length > 14) {
     throw new AppError(400, "Enter a valid phone number");
@@ -31,7 +34,7 @@ export const phoneCreateService = async ({ number, clientId, contactId }: any) =
 
     const newPhone = await phoneRepository.save({
       number,
-      client: clientId,
+      client,
     });
 
     const returnedPhne = await phoneRepository.findOneBy({ id: newPhone.id });
@@ -47,7 +50,7 @@ export const phoneCreateService = async ({ number, clientId, contactId }: any) =
 
     const newPhone = await phoneRepository.save({
       number,
-      contact: contactId,
+      contact,
     });
 
     const returnedPhone = await phoneRepository.findOneBy({ id: newPhone.id });

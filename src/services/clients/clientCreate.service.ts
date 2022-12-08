@@ -4,11 +4,23 @@ import { Email } from "../../entities/emails.entity";
 import { Phone } from "../../entities/phones.entity";
 import { AppError } from "../../errors/AppError";
 import bcrypt from "bcryptjs";
+import { IClientRequest } from "../../interfaces/clients";
 
-export const clientCreateService = async ({ name, username, password, emails, phones }: any) => {
+export const clientCreateService = async ({
+  name,
+  username,
+  password,
+  emails,
+  phones,
+}: IClientRequest) => {
   const clientRepository = AppDataSource.getRepository(Client);
   const emailRepository = AppDataSource.getRepository(Email);
   const phoneRepository = AppDataSource.getRepository(Phone);
+
+  if (!name || !username || !password) {
+    const field = !name ? "name" : !username ? "username" : "password";
+    throw new AppError(400, `${field} is required a field`);
+  }
 
   const usernameExists = await clientRepository.findOneBy({ username });
   if (usernameExists) {

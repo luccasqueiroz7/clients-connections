@@ -2,9 +2,17 @@ import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities/clients.entity";
 import bcrypt from "bcryptjs";
 import { AppError } from "../../errors/AppError";
+import { ICLientUpdate } from "../../interfaces/clients";
 
-export const clientUpdatedService = async ({ name, username, password }: any, id: string) => {
+export const clientUpdatedService = async (
+  { name, username, password }: ICLientUpdate,
+  id: string
+) => {
   const clientRepository = AppDataSource.getRepository(Client);
+
+  if (!name && !username && !password) {
+    throw new AppError(400, "mandatory to pass at least one field");
+  }
 
   const client = await clientRepository.findOneBy({ id });
   if (!client) {
