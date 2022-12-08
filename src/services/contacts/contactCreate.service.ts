@@ -1,24 +1,25 @@
 import { AppDataSource } from "../../data-source";
-import { Client } from "../../entities/clients.entity";
 import { Email } from "../../entities/emails.entity";
 import { Phone } from "../../entities/phones.entity";
 import { AppError } from "../../errors/AppError";
-import bcrypt from "bcryptjs";
+import { Contact } from "../../entities/contacts.entity";
+import { Client } from "../../entities/clients.entity";
 
-export const clientCreateService = async ({ name, username, password, emails, phones }: any) => {
+export const contactCreateService = async ({ name, emails, phones }: any, userId: string) => {
+  const contactRepository = AppDataSource.getRepository(Contact);
   const clientRepository = AppDataSource.getRepository(Client);
   const emailRepository = AppDataSource.getRepository(Email);
   const phoneRepository = AppDataSource.getRepository(Phone);
 
-  const usernameExists = await clientRepository.findOneBy({ username });
-  if (usernameExists) {
-    throw new AppError(400, "Username already exists");
+  const client = await clientRepository.findOneBy({ id: userId });
+
+  if (!client) {
+    throw new AppError(404, "Client not found");
   }
 
-  const newClient = await clientRepository.save({
+  const newContact = await contactRepository.save({
     name,
-    username,
-    password: bcrypt.hashSync(password, 10),
+    client,
   });
 
   if (emails) {
@@ -26,7 +27,7 @@ export const clientCreateService = async ({ name, username, password, emails, ph
       emails.map(async (email: string) => {
         await emailRepository.save({
           email,
-          client: newClient,
+          contact: newContact,
         });
       })
     );
@@ -37,13 +38,13 @@ export const clientCreateService = async ({ name, username, password, emails, ph
       phones.map(async (number: string) => {
         await phoneRepository.save({
           number,
-          client: newClient,
+          contact: newContact,
         });
       })
     );
   }
 
-  const returnedClient = await clientRepository.findOneBy({ id: newClient.id });
+  const returnedContact = await contactRepository.findOneBy({ id: newContact.id });
 
-  return returnedClient;
+  return returnedContact;
 };

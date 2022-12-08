@@ -1,20 +1,24 @@
 import { AppDataSource } from "../../data-source";
-import { Email } from "../../entities/emails.entity";
 import { Client } from "../../entities/clients.entity";
 import { Contact } from "../../entities/contacts.entity";
 import { AppError } from "../../errors/AppError";
+import { Phone } from "../../entities/phones.entity";
 
-export const emailCreateService = async ({ email, clientId, contactId }: any) => {
+export const phoneCreateService = async ({ number, clientId, contactId }: any) => {
   // Conectar com contatos depois
   // Lembrar que tem que estar logado
-  const emailRepository = AppDataSource.getRepository(Email);
+  const phoneRepository = AppDataSource.getRepository(Phone);
+
+  if (number.length < 8 || number.length > 14) {
+    throw new AppError(400, "Enter a valid phone number");
+  }
 
   if (!clientId && !contactId) {
     throw new AppError(404, "Client or contact not found");
   }
 
   if (clientId && contactId) {
-    throw new AppError(400, "only one between client and contact");
+    throw new AppError(400, "Only one between client and contact");
   }
 
   if (clientId) {
@@ -25,14 +29,14 @@ export const emailCreateService = async ({ email, clientId, contactId }: any) =>
       throw new AppError(404, "Client not found");
     }
 
-    const newEmail = await emailRepository.save({
-      email,
+    const newPhone = await phoneRepository.save({
+      number,
       client: clientId,
     });
 
-    const returnedEmail = await emailRepository.findOneBy({ id: newEmail.id });
+    const returnedPhne = await phoneRepository.findOneBy({ id: newPhone.id });
 
-    return returnedEmail;
+    return returnedPhne;
   } else {
     const contactRepository = AppDataSource.getRepository(Contact);
     const contact = await contactRepository.findOneBy({ id: contactId });
@@ -41,13 +45,13 @@ export const emailCreateService = async ({ email, clientId, contactId }: any) =>
       throw new AppError(404, "Contact not found");
     }
 
-    const newEmail = await emailRepository.save({
-      email,
+    const newPhone = await phoneRepository.save({
+      number,
       contact: contactId,
     });
 
-    const returnedEmail = await emailRepository.findOneBy({ id: newEmail.id });
+    const returnedPhone = await phoneRepository.findOneBy({ id: newPhone.id });
 
-    return returnedEmail;
+    return returnedPhone;
   }
 };
