@@ -7,7 +7,6 @@ import { LoginDiv } from "./style";
 import { toast } from "react-toastify";
 
 export const Login = () => {
-  // Ajustar essa rota, classnames e tals...
   const history = useHistory();
 
   const formSchema = yup.object().shape({
@@ -24,7 +23,6 @@ export const Login = () => {
   });
 
   const onSubmitFunction = (data) => {
-    // console.log(data);
     api
       .post("/login", data)
       .then((res) => {
