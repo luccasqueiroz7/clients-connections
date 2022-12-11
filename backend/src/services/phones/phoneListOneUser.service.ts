@@ -4,7 +4,6 @@ import { Contact } from "../../entities/contacts.entity";
 import { AppError } from "../../errors/AppError";
 
 export const phoneListOneUserService = async (userId: string) => {
-  // Rever essa função
   const clientRepository = AppDataSource.getRepository(Client);
   const contactRepository = AppDataSource.getRepository(Contact);
 

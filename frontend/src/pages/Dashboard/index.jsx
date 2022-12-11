@@ -26,7 +26,6 @@ import { toast } from "react-toastify";
 
 export const Dashboard = () => {
   const [profile, setProfile] = useState([]);
-  // para edição do usuario logado
   const [editProfile, setEditProfile] = useState(false);
   const [addEmail, setAddEmail] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
@@ -46,7 +45,6 @@ export const Dashboard = () => {
   const [profileId, setProfileId] = useState(false);
   const history = useHistory();
 
-  // Adicionar dependencias useEffect
   useEffect(() => {
     api
       .get("/clients/profile", {
