@@ -9,7 +9,13 @@ import { ModalDeleteEmail } from "../ModalDeleteEmail";
 import { ModalEditEmail } from "../ModalEditEmail";
 import { ModalDiv, ModalList } from "../style";
 
-export const ModalListEmailsContact = ({ setListEmailsContact, setProfileId, profileId }) => {
+export const ModalListEmailsContact = ({
+  profileDependency,
+  setProfileDependency,
+  setListEmailsContact,
+  setProfileId,
+  profileId,
+}) => {
   const [emailsContact, setEmailsContact] = useState([]);
   const [addEmail, setAddEmail] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
@@ -26,7 +32,7 @@ export const ModalListEmailsContact = ({ setListEmailsContact, setProfileId, pro
         setEmailsContact(res.data);
       })
       .catch((err) => toast.error(err.response.data.message));
-  }, [profileId, editEmail, emailsContact]);
+  }, [profileDependency]);
 
   return (
     <ModalDiv>
@@ -64,6 +70,8 @@ export const ModalListEmailsContact = ({ setListEmailsContact, setProfileId, pro
       </ModalList>
       {addEmail && (
         <ModalAddEmail
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setListEmailsContact={setListEmailsContact}
           setAddEmail={setAddEmail}
           profileId={profileId}
@@ -71,6 +79,8 @@ export const ModalListEmailsContact = ({ setListEmailsContact, setProfileId, pro
       )}
       {editEmail && (
         <ModalEditEmail
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setListEmailsContact={setListEmailsContact}
           setEditEmail={setEditEmail}
           profileId={profileId}
@@ -78,6 +88,8 @@ export const ModalListEmailsContact = ({ setListEmailsContact, setProfileId, pro
       )}
       {deleteEmail && (
         <ModalDeleteEmail
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setListEmailsContact={setListEmailsContact}
           setDeleteEmail={setDeleteEmail}
           profileId={profileId}

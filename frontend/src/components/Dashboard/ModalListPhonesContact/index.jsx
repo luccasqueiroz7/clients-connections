@@ -9,7 +9,13 @@ import { ModalDeleteNumber } from "../ModalDeleteNumber";
 import { ModalEditNumber } from "../ModalEditNumber";
 import { ModalDiv, ModalList } from "../style";
 
-export const ModalListPhonesContact = ({ setListPhonesContact, setProfileId, profileId }) => {
+export const ModalListPhonesContact = ({
+  setListPhonesContact,
+  profileDependency,
+  setProfileDependency,
+  setProfileId,
+  profileId,
+}) => {
   const [phonesContact, setPhonesContact] = useState([]);
   const [addNumber, setAddNumber] = useState(false);
   const [editNumber, setEditNumber] = useState(false);
@@ -26,7 +32,7 @@ export const ModalListPhonesContact = ({ setListPhonesContact, setProfileId, pro
         setPhonesContact(res.data);
       })
       .catch((err) => toast.error(err.response.data.message));
-  }, [profileId, editNumber, phonesContact]);
+  }, [profileDependency]);
 
   return (
     <ModalDiv>
@@ -64,6 +70,8 @@ export const ModalListPhonesContact = ({ setListPhonesContact, setProfileId, pro
       </ModalList>
       {addNumber && (
         <ModalAddNumber
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setListPhonesContact={setListPhonesContact}
           setAddNumber={setAddNumber}
           profileId={profileId}
@@ -71,6 +79,8 @@ export const ModalListPhonesContact = ({ setListPhonesContact, setProfileId, pro
       )}
       {editNumber && (
         <ModalEditNumber
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setListPhonesContact={setListPhonesContact}
           setEditNumber={setEditNumber}
           profileId={profileId}
@@ -78,6 +88,8 @@ export const ModalListPhonesContact = ({ setListPhonesContact, setProfileId, pro
       )}
       {deleteNumber && (
         <ModalDeleteNumber
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setListPhonesContact={setListPhonesContact}
           setDeleteNumber={setDeleteNumber}
           profileId={profileId}

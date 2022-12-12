@@ -7,6 +7,8 @@ import { ModalEditEmail } from "../ModalEditEmail";
 import { ModalDiv, ModalList } from "../style";
 
 export const ModalEditListEmailsContact = ({
+  profileDependency,
+  setProfileDependency,
   setEditListEmailsContact,
   setProfileId,
   profileId,
@@ -25,7 +27,7 @@ export const ModalEditListEmailsContact = ({
         setEmailsContact(res.data);
       })
       .catch((err) => toast.error(err.response.data.message));
-  }, [profileId, editEmail, emailsContact]);
+  }, [profileDependency]);
 
   return (
     <ModalDiv>
@@ -52,6 +54,8 @@ export const ModalEditListEmailsContact = ({
       </ModalList>
       {editEmail && (
         <ModalEditEmail
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setEditListEmailsContact={setEditListEmailsContact}
           setEditEmail={setEditEmail}
           profileId={profileId}

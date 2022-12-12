@@ -5,7 +5,13 @@ import * as yup from "yup";
 import { api } from "../../../services/api";
 import { ModalDiv } from "../style";
 
-export const ModalAddNumber = ({ setAddNumber, setListPhonesContact, profileId }) => {
+export const ModalAddNumber = ({
+  setAddNumber,
+  profileDependency,
+  setProfileDependency,
+  setListPhonesContact,
+  profileId,
+}) => {
   const formSchema = yup.object().shape({
     number: yup.string().required("Número obrigatório"),
   });
@@ -33,6 +39,7 @@ export const ModalAddNumber = ({ setAddNumber, setListPhonesContact, profileId }
       })
       .then((res) => {
         setAddNumber(false);
+        setProfileDependency(!profileDependency);
         toast.success("Número adicionado");
       })
       .catch((err) => toast.error(err.response.data.message));

@@ -8,6 +8,8 @@ import { ModalDiv, ModalList } from "../style";
 
 export const ModalEditListPhonesContact = ({
   setEditListPhonesContact,
+  profileDependency,
+  setProfileDependency,
   setProfileId,
   profileId,
 }) => {
@@ -25,7 +27,7 @@ export const ModalEditListPhonesContact = ({
         setPhonesContact(res.data);
       })
       .catch((err) => toast.error(err.response.data.message));
-  }, [profileId, editNumber, phonesContact]);
+  }, [profileDependency]);
 
   return (
     <ModalDiv>
@@ -52,6 +54,8 @@ export const ModalEditListPhonesContact = ({
       </ModalList>
       {editNumber && (
         <ModalEditNumber
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setEditListPhonesContact={setEditListPhonesContact}
           setEditNumber={setEditNumber}
           profileId={profileId}

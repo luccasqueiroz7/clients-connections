@@ -5,7 +5,13 @@ import * as yup from "yup";
 import { api } from "../../../services/api";
 import { ModalDiv } from "../style";
 
-export const ModalAddEmail = ({ setAddEmail, setListEmailsContact, profileId }) => {
+export const ModalAddEmail = ({
+  setAddEmail,
+  profileDependency,
+  setProfileDependency,
+  setListEmailsContact,
+  profileId,
+}) => {
   const formSchema = yup.object().shape({
     email: yup.string().required("Email obrigatório").email("Email inválido"),
   });
@@ -33,6 +39,7 @@ export const ModalAddEmail = ({ setAddEmail, setListEmailsContact, profileId }) 
       })
       .then((res) => {
         setAddEmail(false);
+        setProfileDependency(!profileDependency);
         toast.success("Email adicionado");
       })
       .catch((err) => toast.error(err.response.data.message));

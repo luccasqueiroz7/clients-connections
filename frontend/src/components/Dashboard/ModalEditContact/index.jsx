@@ -5,7 +5,12 @@ import * as yup from "yup";
 import { api } from "../../../services/api";
 import { ModalDiv } from "../style";
 
-export const ModalEditContact = ({ setEditContact, profileId }) => {
+export const ModalEditContact = ({
+  setEditContact,
+  profileDependency,
+  setProfileDependency,
+  profileId,
+}) => {
   const formSchema = yup.object().shape({
     name: yup.string(),
   });
@@ -27,6 +32,7 @@ export const ModalEditContact = ({ setEditContact, profileId }) => {
       })
       .then((res) => {
         toast.success("Contato editado");
+        setProfileDependency(!profileDependency);
         setEditContact(false);
       })
       .catch((err) => toast.error(err.response.data.message));

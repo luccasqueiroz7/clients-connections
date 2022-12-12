@@ -4,6 +4,8 @@ import { ModalDiv } from "../style";
 
 export const ModalDeleteEmail = ({
   setDeleteEmail,
+  profileDependency,
+  setProfileDependency,
   setDeleteListEmailsContact,
   setListEmailsContact,
   profileId,
@@ -18,6 +20,7 @@ export const ModalDeleteEmail = ({
       .then((res) => {
         toast.success("Email deletado");
         setDeleteEmail(false);
+        setProfileDependency(!profileDependency);
         if (setListEmailsContact) {
           setListEmailsContact(false);
         }

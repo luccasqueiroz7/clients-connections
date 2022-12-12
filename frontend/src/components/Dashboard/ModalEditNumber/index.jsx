@@ -7,6 +7,8 @@ import { ModalDiv } from "../style";
 
 export const ModalEditNumber = ({
   setEditNumber,
+  profileDependency,
+  setProfileDependency,
   setEditListPhonesContact,
   setListPhonesContact,
   profileId,
@@ -33,6 +35,7 @@ export const ModalEditNumber = ({
       .then((res) => {
         toast.success("Número editado");
         setEditNumber(false);
+        setProfileDependency(!profileDependency);
         if (setListPhonesContact) {
           setListPhonesContact(false);
         }

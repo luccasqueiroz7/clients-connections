@@ -4,6 +4,8 @@ import { ModalDiv } from "../style";
 
 export const ModalDeleteNumber = ({
   setDeleteNumber,
+  profileDependency,
+  setProfileDependency,
   setDeleteListPhonesContact,
   setListPhonesContact,
   profileId,
@@ -18,6 +20,7 @@ export const ModalDeleteNumber = ({
       .then((res) => {
         toast.success("Número deletado");
         setDeleteNumber(false);
+        setProfileDependency(!profileDependency);
         if (setDeleteListPhonesContact) {
           setDeleteListPhonesContact(false);
         }
