@@ -7,6 +7,8 @@ import { ModalDiv } from "../style";
 
 export const ModalEditEmail = ({
   setEditEmail,
+  profileDependency,
+  setProfileDependency,
   setEditListEmailsContact,
   setListEmailsContact,
   profileId,
@@ -33,6 +35,7 @@ export const ModalEditEmail = ({
       .then((res) => {
         toast.success("Email editado");
         setEditEmail(false);
+        setProfileDependency(!profileDependency);
         if (setListEmailsContact) {
           setListEmailsContact(false);
         }

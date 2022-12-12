@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 
 export const ModalDeleteListPhonesContact = ({
   setDeleteListPhonesContact,
+  profileDependency,
+  setProfileDependency,
   setProfileId,
   profileId,
 }) => {
@@ -25,7 +27,7 @@ export const ModalDeleteListPhonesContact = ({
         setPhonesContact(res.data);
       })
       .catch((err) => toast.error(err.response.data.message));
-  }, [profileId, deleteNumber, phonesContact]);
+  }, [profileDependency]);
 
   return (
     <ModalDiv>
@@ -52,6 +54,8 @@ export const ModalDeleteListPhonesContact = ({
       </ModalList>
       {deleteNumber && (
         <ModalDeleteNumber
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setDeleteListPhonesContact={setDeleteListPhonesContact}
           setDeleteNumber={setDeleteNumber}
           profileId={profileId}

@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 
 export const Dashboard = () => {
   const [profile, setProfile] = useState([]);
+  const [profileDependency, setProfileDependency] = useState(false);
   const [editProfile, setEditProfile] = useState(false);
   const [addEmail, setAddEmail] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
@@ -54,7 +55,7 @@ export const Dashboard = () => {
       })
       .then((res) => setProfile(res.data))
       .catch((err) => toast.error(err.response.data.message));
-  }, [profile]);
+  }, [profileDependency]);
 
   return (
     <DashboardDiv>
@@ -92,7 +93,14 @@ export const Dashboard = () => {
         </div>
         <p>{profile?.username}</p>
       </SecondHeader>
-      {editProfile && <ModalEditProfile setEditProfile={setEditProfile} profileId={profile?.id} />}
+      {editProfile && (
+        <ModalEditProfile
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setEditProfile={setEditProfile}
+          profileId={profile?.id}
+        />
+      )}
 
       <img src={divider} alt="----" className="divider" />
       <DivFields>
@@ -132,9 +140,30 @@ export const Dashboard = () => {
           ))}
         </div>
       </DivFields>
-      {addEmail && <ModalAddEmail setAddEmail={setAddEmail} profileId={profile?.id} />}
-      {editEmail && <ModalEditEmail setEditEmail={setEditEmail} profileId={profileId} />}
-      {deleteEmail && <ModalDeleteEmail setDeleteEmail={setDeleteEmail} profileId={profileId} />}
+      {addEmail && (
+        <ModalAddEmail
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setAddEmail={setAddEmail}
+          profileId={profile?.id}
+        />
+      )}
+      {editEmail && (
+        <ModalEditEmail
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setEditEmail={setEditEmail}
+          profileId={profileId}
+        />
+      )}
+      {deleteEmail && (
+        <ModalDeleteEmail
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setDeleteEmail={setDeleteEmail}
+          profileId={profileId}
+        />
+      )}
 
       <DivFields>
         <p>
@@ -173,10 +202,29 @@ export const Dashboard = () => {
           ))}
         </div>
       </DivFields>
-      {addNumber && <ModalAddNumber setAddNumber={setAddNumber} profileId={profile?.id} />}
-      {editNumber && <ModalEditNumber setEditNumber={setEditNumber} profileId={profileId} />}
+      {addNumber && (
+        <ModalAddNumber
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setAddNumber={setAddNumber}
+          profileId={profile?.id}
+        />
+      )}
+      {editNumber && (
+        <ModalEditNumber
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setEditNumber={setEditNumber}
+          profileId={profileId}
+        />
+      )}
       {deleteNumber && (
-        <ModalDeleteNumber setDeleteNumber={setDeleteNumber} profileId={profileId} />
+        <ModalDeleteNumber
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setDeleteNumber={setDeleteNumber}
+          profileId={profileId}
+        />
       )}
 
       <ContactField>
@@ -274,13 +322,33 @@ export const Dashboard = () => {
           ))}
         </div>
       </ContactField>
-      {addContact && <ModalAddContact setAddContact={setAddContact} profileId={profile?.id} />}
-      {editContact && <ModalEditContact setEditContact={setEditContact} profileId={profileId} />}
+      {addContact && (
+        <ModalAddContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setAddContact={setAddContact}
+        />
+      )}
+      {editContact && (
+        <ModalEditContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setEditContact={setEditContact}
+          profileId={profileId}
+        />
+      )}
       {deleteContact && (
-        <ModalDeleteContact setDeleteContact={setDeleteContact} profileId={profileId} />
+        <ModalDeleteContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
+          setDeleteContact={setDeleteContact}
+          profileId={profileId}
+        />
       )}
       {listEmailsContact && (
         <ModalListEmailsContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setListEmailsContact={setListEmailsContact}
           setProfileId={setProfileId}
           profileId={profileId}
@@ -288,6 +356,8 @@ export const Dashboard = () => {
       )}
       {editListEmailsContact && (
         <ModalEditListEmailsContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setEditListEmailsContact={setEditListEmailsContact}
           setProfileId={setProfileId}
           profileId={profileId}
@@ -295,6 +365,8 @@ export const Dashboard = () => {
       )}
       {deleteListEmailsContact && (
         <ModalDeleteListEmailsContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setDeleteListEmailsContact={setDeleteListEmailsContact}
           setProfileId={setProfileId}
           profileId={profileId}
@@ -302,6 +374,8 @@ export const Dashboard = () => {
       )}
       {listPhonesContact && (
         <ModalListPhonesContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setListPhonesContact={setListPhonesContact}
           setProfileId={setProfileId}
           profileId={profileId}
@@ -309,6 +383,8 @@ export const Dashboard = () => {
       )}
       {editListPhonesContact && (
         <ModalEditListPhonesContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setEditListPhonesContact={setEditListPhonesContact}
           setProfileId={setProfileId}
           profileId={profileId}
@@ -316,6 +392,8 @@ export const Dashboard = () => {
       )}
       {deleteListPhonesContact && (
         <ModalDeleteListPhonesContact
+          setProfileDependency={setProfileDependency}
+          profileDependency={profileDependency}
           setDeleteListPhonesContact={setDeleteListPhonesContact}
           setProfileId={setProfileId}
           profileId={profileId}

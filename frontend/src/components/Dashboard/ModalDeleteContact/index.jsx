@@ -2,7 +2,12 @@ import { toast } from "react-toastify";
 import { api } from "../../../services/api";
 import { ModalDiv } from "../style";
 
-export const ModalDeleteContact = ({ setDeleteContact, profileId }) => {
+export const ModalDeleteContact = ({
+  setDeleteContact,
+  profileDependency,
+  setProfileDependency,
+  profileId,
+}) => {
   const onSubmitFunction = () => {
     api
       .delete(`/contacts/${profileId}`, {
@@ -12,6 +17,7 @@ export const ModalDeleteContact = ({ setDeleteContact, profileId }) => {
       })
       .then((res) => {
         setDeleteContact(false);
+        setProfileDependency(!profileDependency);
         toast.success("Contato deletado");
       })
       .catch((err) => toast.error(err.response.data.message));

@@ -7,7 +7,7 @@ import { ModalDiv } from "../style";
 import { DivAddField, Fields } from "./style";
 import { toast } from "react-toastify";
 
-export const ModalAddContact = ({ setAddContact, profileId }) => {
+export const ModalAddContact = ({ setAddContact, profileDependency, setProfileDependency }) => {
   const [emailsCount, setEmailsCount] = useState([]);
   const [phonesCount, setPhonesCount] = useState([]);
 
@@ -40,6 +40,7 @@ export const ModalAddContact = ({ setAddContact, profileId }) => {
       })
       .then((res) => {
         setAddContact(false);
+        setProfileDependency(!profileDependency);
         toast.success("Contato adicionado");
       })
       .catch((err) => toast.error(err.response.data.message));

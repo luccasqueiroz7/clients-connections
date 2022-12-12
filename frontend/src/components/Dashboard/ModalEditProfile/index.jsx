@@ -5,7 +5,12 @@ import * as yup from "yup";
 import { api } from "../../../services/api";
 import { ModalDiv } from "../style";
 
-export const ModalEditProfile = ({ setEditProfile, profileId }) => {
+export const ModalEditProfile = ({
+  setEditProfile,
+  profileDependency,
+  setProfileDependency,
+  profileId,
+}) => {
   const formSchema = yup.object().shape({
     name: yup.string(),
     username: yup.string(),
@@ -29,6 +34,7 @@ export const ModalEditProfile = ({ setEditProfile, profileId }) => {
       })
       .then((res) => {
         setEditProfile(false);
+        setProfileDependency(!profileDependency);
         toast.success("Cliente editado com sucesso");
       })
       .catch((err) => toast.error(err.response.data.message));
